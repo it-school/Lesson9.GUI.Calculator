@@ -85,5 +85,36 @@ namespace Lesson9.GUI
             calculator.Calculate();
             display.Text = calculator.Result;
         }
+
+        private void buttonMemoryClear_Click(object sender, EventArgs e)
+        {
+            calculator.Memory = 0;
+            labelMemory.Visible = false;
+        }
+
+        private void buttonMemoryRead_Click(object sender, EventArgs e)
+        {
+            display.Text = calculator.Memory.ToString();
+        }
+
+        private void buttonMemoryPlus_Click(object sender, EventArgs e)
+        {
+            calculator.Memory += Convert.ToDouble(display.Text);
+            isSecondNumber = true;
+            if (calculator.Memory != 0)
+                labelMemory.Visible = true;
+            else
+                labelMemory.Visible = false;
+        }
+
+        private void buttonMemoryMinus_Click(object sender, EventArgs e)
+        {
+            calculator.Memory -= Convert.ToDouble(display.Text);
+            isSecondNumber = true;
+            if (calculator.Memory != 0)
+                labelMemory.Visible = true;
+            else
+                labelMemory.Visible = false;
+        }
     }
 }
