@@ -12,9 +12,78 @@ namespace Lesson9.GUI
 {
     public partial class Form1 : Form
     {
+        Calculator calculator;
+        bool isSecondNumber;
+
         public Form1()
         {
             InitializeComponent();
+            calculator = new Calculator();
+            isSecondNumber = false;
+        }
+
+        public void AddDigit(String digit)
+        {
+            if (display.Text.Equals("0") || isSecondNumber)
+                display.Text = digit;
+            else
+                display.Text += digit;
+
+            isSecondNumber = false;
+        }
+
+        public void ChooseOperation(object sender, EventArgs e)
+        {
+            switch (((Button)sender).Text)
+            {
+                case "+":
+                    calculator.OperationCode = 1;
+                    break;
+                case "-":
+                    calculator.OperationCode = 2;
+                    break;
+                case "*":
+                    calculator.OperationCode = 3;
+                    break;
+                case "/":
+                    calculator.OperationCode = 4;
+                    break;
+                default:
+                    break;
+            }
+
+            calculator.Number1 = Convert.ToDouble(display.Text);
+            this.isSecondNumber = true;
+
+        }
+
+        private void buttonDigit_Click(object sender, EventArgs e)
+        {
+            AddDigit(((Button)sender).Text);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            double number = Convert.ToDouble(display.Text) * (-1);
+            display.Text = number.ToString();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (!display.Text.Contains(","))
+                display.Text += ",";
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            display.Text = "0";
+        }
+
+        private void buttonCalculate_Click(object sender, EventArgs e)
+        {
+            calculator.Number2 = Convert.ToDouble(display.Text);
+            calculator.Calculate();
+            display.Text = calculator.Result;
         }
     }
 }
